@@ -311,7 +311,7 @@ en:
     search:
       start: Start searching...
   landing:
-    about: "%{href} is a simple front-end for your EduCrack open-source web conferencing server. You can create your own rooms to host sessions, or join others using a short and convenient link."
+    about: "Welcome to Educrack Live streaming Server"
     welcome: Welcome to EduCrack.
     video: Watch our tutorial on using EduCrack
     upgrade: Show me how to upgrade to 2.0!
