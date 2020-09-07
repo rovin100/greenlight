@@ -28,6 +28,11 @@ class UsersController < ApplicationController
   before_action :ensure_unauthenticated_except_twitter, only: [:create]
   before_action :check_user_signup_allowed, only: [:create]
   before_action :check_admin_of, only: [:edit, :change_password, :delete_account]
+  skip_before_action :verify_authenticity_token
+
+  def api_signup
+    render json: {'test': 'dd'}
+  end
 
   # POST /u
   def create

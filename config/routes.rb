@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   match '/500', to: 'errors#internal_error', via: :all, as: :internal_error
 
   # Signin/Signup routes.
+  post '/api/signup', to: 'users#api_signup'
   get '/signin', to: 'sessions#signin', as: :signin
   get '/signup', to: 'sessions#new', as: :signup
   post '/signup', to: 'users#create', as: :create_user
