@@ -31,7 +31,30 @@ class UsersController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def api_signup
-    render json: {'test': 'dd'}
+    @user = User.new(user_params)
+    @user.provider = @user_domain
+
+    # User has passed all validations required
+    if @user.save
+
+      # Set user to pending and redirect if Approval Registration is set
+      if approval_registration
+        @user.set_role :pending
+      end
+
+      send_registration_email
+
+      # Sign in automatically if email verification is disabled or if user is already verified.
+      if !Rails.configuration.enable_email_verification || @user.email_verified
+        @user.set_role :user
+      end
+
+      send_activation_email(@user, @user.create_activation_token)
+
+      render json: {user: @user}
+    else
+      render json: {error: @user.errors}
+    end
   end
 
   # POST /u
