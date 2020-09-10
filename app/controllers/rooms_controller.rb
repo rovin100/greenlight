@@ -188,7 +188,7 @@ class RoomsController < ApplicationController
   end
 
   def start_meeting_url
-    current_user = User.find(params[:user_id])
+    current_user = User.find(8)
 
     opts = default_meeting_options
     opts[:user_is_moderator] = true
@@ -198,7 +198,9 @@ class RoomsController < ApplicationController
     opts[:require_moderator_approval] = room_setting_with_config("requireModeratorApproval")
     opts[:record] = record_meeting
 
-    render json: { url: join_path(@room, current_user.name, opts, current_user.uid) }
+    logger.info "==============#{join_path(@room, params[:name], opts, current_user.uid)}  ================"
+
+    render json: { url: join_path(@room, params[:name], opts, current_user.uid) }
   end
 
   # POST /:room_uid/update_settings
