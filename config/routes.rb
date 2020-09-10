@@ -26,6 +26,7 @@ Rails.application.routes.draw do
 
   # Signin/Signup routes.
   post '/api/signup', to: 'users#api_signup'
+  get '/api/start_meeting_url', to: 'rooms#start_meeting_url'
   get '/signin', to: 'sessions#signin', as: :signin
   get '/signup', to: 'sessions#new', as: :signup
   post '/signup', to: 'users#create', as: :create_user
