@@ -33,7 +33,7 @@ class RoomsController < ApplicationController
                 unless: -> { !Rails.configuration.enable_email_verification }
   before_action :verify_room_owner_valid, only: [:show, :join]
   before_action :verify_user_not_admin, only: [:show]
-  skip_before_action :verify_authenticity_token, only: [:join]
+  skip_before_action :verify_authenticity_token, only: [:join, :start_meeting_url]
 
   # POST /
   def create
@@ -185,6 +185,20 @@ class RoomsController < ApplicationController
     # Notify users that the room has started.
     # Delay 5 seconds to allow for server start, although the request will retry until it succeeds.
     NotifyUserWaitingJob.set(wait: 5.seconds).perform_later(@room)
+  end
+
+  def start_meeting_url
+    current_user = User.find(params[:user_id])
+
+    opts = default_meeting_options
+    opts[:user_is_moderator] = true
+    # Include the user's choices for the room settings
+    @room_settings = JSON.parse(@room[:room_settings])
+    opts[:mute_on_start] = room_setting_with_config("muteOnStart")
+    opts[:require_moderator_approval] = room_setting_with_config("requireModeratorApproval")
+    opts[:record] = record_meeting
+
+    render json: { url: join_path(@room, current_user.name, opts, current_user.uid) }
   end
 
   # POST /:room_uid/update_settings
