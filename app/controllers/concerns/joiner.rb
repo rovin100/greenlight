@@ -86,7 +86,7 @@ module Joiner
     invite_msg = I18n.t("invite_message")
     {
       user_is_moderator: false,
-      meeting_logout_url: 'https://google.com',#request.base_url + logout_room_path(@room),
+      meeting_logout_url: 'http://www.educrack.com',#request.base_url + logout_room_path(@room),
       meeting_recorded: true,
       moderator_message: "#{invite_msg}\n\n#{request.base_url + room_path(@room)}",
       host: request.host,

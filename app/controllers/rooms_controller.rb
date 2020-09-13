@@ -198,9 +198,7 @@ class RoomsController < ApplicationController
     opts[:require_moderator_approval] = room_setting_with_config("requireModeratorApproval")
     opts[:record] = record_meeting
 
-    logger.info "==============#{join_path(@room, params[:name], opts, current_user.uid)}  ================"
-
-    render json: { url: join_path(@room, params[:name], opts, current_user.uid) }
+    render json: { url: "#{join_path(@room, params[:name], opts, current_user.uid)}" }
   end
 
   # POST /:room_uid/update_settings
