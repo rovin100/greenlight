@@ -63,7 +63,7 @@ class RoomsController < ApplicationController
 
   # POST /
   def create_via_api
-    current_user = User.find(ENV[:ADMIN_USER_ID])
+    current_user = User.find(ENV['ADMIN_USER_ID'])
 
     @room = Room.new(name: room_params[:name], access_code: room_params[:access_code])
     @room.owner = current_user
@@ -200,7 +200,7 @@ class RoomsController < ApplicationController
   end
 
   def start_meeting_url
-    current_user = User.find(ENV[:ADMIN_USER_ID])
+    current_user = User.find(ENV['ADMIN_USER_ID'])
 
     opts = default_meeting_options
     opts[:user_is_moderator] = true
