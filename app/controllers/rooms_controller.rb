@@ -25,7 +25,7 @@ class RoomsController < ApplicationController
   before_action :validate_accepted_terms, unless: -> { !Rails.configuration.terms }
   before_action :validate_verified_email, except: [:show, :join],
                 unless: -> { !Rails.configuration.enable_email_verification }
-  before_action :find_room, except: [:create, :join_specific_room, :cant_create_rooms]
+  before_action :find_room, except: [:create, :join_specific_room, :cant_create_rooms, :create_via_api]
   before_action :verify_room_ownership_or_admin_or_shared, only: [:start, :shared_access]
   before_action :verify_room_ownership_or_admin, only: [:update_settings, :destroy, :preupload_presentation, :remove_presentation]
   before_action :verify_room_ownership_or_shared, only: [:remove_shared_access]
@@ -33,7 +33,7 @@ class RoomsController < ApplicationController
                 unless: -> { !Rails.configuration.enable_email_verification }
   before_action :verify_room_owner_valid, only: [:show, :join]
   before_action :verify_user_not_admin, only: [:show]
-  skip_before_action :verify_authenticity_token, only: [:join, :start_meeting_url]
+  skip_before_action :verify_authenticity_token, only: [:join, :start_meeting_url, :create_via_api]
 
   # POST /
   def create
@@ -59,6 +59,18 @@ class RoomsController < ApplicationController
 
     # Start the room if auto join was turned on
     start
+  end
+
+  # POST /
+  def create_via_api
+    current_user = User.find(8)
+
+    @room = Room.new(name: room_params[:name], access_code: room_params[:access_code])
+    @room.owner = current_user
+    @room.room_settings = create_room_settings_string(room_params)
+    @room.save
+
+    render json: {room: @room}
   end
 
   # GET /:room_uid
