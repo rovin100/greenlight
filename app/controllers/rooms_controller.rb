@@ -70,7 +70,7 @@ class RoomsController < ApplicationController
     @room.room_settings = create_room_settings_string(room_params)
     @room.save
 
-    render json: {room_uid: @room.uid, join_meeting_url: "#{ENV[APP_ENDPOINT]}/#{@room.uid}"}
+    render json: {room_uid: @room.uid, join_meeting_url: "#{ENV['APP_ENDPOINT']}/#{@room.uid}"}
   end
 
   # GET /:room_uid
