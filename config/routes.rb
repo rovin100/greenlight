@@ -29,8 +29,8 @@ Rails.application.routes.draw do
   get '/api/start_meeting_url', to: 'rooms#start_meeting_url'
   post '/api/create_via_api', to: 'rooms#create_via_api'
   get '/signin', to: 'sessions#signin', as: :signin
-  get '/signup', to: 'sessions#new', as: :signup
-  post '/signup', to: 'users#create', as: :create_user
+  # get '/signup', to: 'sessions#new', as: :signup
+  # post '/signup', to: 'users#create', as: :create_user
   get '/ldap_signin', to: 'sessions#ldap_signin', as: :ldap_signin
 
   # Redirect to terms page
