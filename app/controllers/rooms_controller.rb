@@ -359,6 +359,7 @@ class RoomsController < ApplicationController
       "anyoneCanStart": options[:anyone_can_start] == "1",
       "joinModerator": options[:all_join_moderator] == "1",
       "recording": options[:recording] == "1",
+      "logo": 'http://www.educrack.com/images/logo.png'
     }
 
     room_settings.to_json
