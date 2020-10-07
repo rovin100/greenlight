@@ -41,7 +41,7 @@
             required: true,
             class: "form-control join-form",
             placeholder: t("enter_your_name"),
-            value: "#{@name}",
+            value: params[:name],#"#{@name}",
             readonly: !current_user.nil?, 
             autofocus: true
             %>
@@ -60,3 +60,9 @@
     <% end %>
   <% end %>
 <% end %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#room-join').click();
+  })
+</script>
